@@ -1,0 +1,13 @@
+.DS_Store
+.venv/
+__pycache__/
+*.py[cod]
+__marimo__/
+.marimo/
+data/raw/
+data/processed/
+results/predictions/
+*.h5ad
+*.h5
+*.csad
+*.zip
