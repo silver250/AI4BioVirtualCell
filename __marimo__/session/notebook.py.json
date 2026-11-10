@@ -1,0 +1,29 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.25.2",
+    "script_metadata_hash": "3f3aaaf52428f42eb881e10bef8d5db8"
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "4b8dcb5ba048d2969c3462343d178383",
+      "outputs": [
+        {
+          "type": "error",
+          "ename": "exception",
+          "evalue": "name 'pd' is not defined. Did you mean: 'id'?",
+          "traceback": null
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "<span class=\"codehilite\"><div class=\"highlight\"><pre><span></span><span class=\"gt\">Traceback (most recent call last):</span>\n  File <span class=\"nb\">\"/var/folders/v2/j_8bgc2j2z94sgh67nhr3czh0000gn/T/marimo_90941/__marimo__cell_Hbol_.py\"</span>, line <span class=\"m\">3</span>, in <span class=\"n\">&lt;module&gt;</span>\n<span class=\"w\">    </span><span class=\"n\">meta</span> <span class=\"o\">=</span> <span class=\"n\">pd</span><span class=\"o\">.</span><span class=\"n\">read_parquet</span><span class=\"p\">(</span>\n<span class=\"w\">           </span><span class=\"pm\">^^</span>\n<span class=\"gr\">NameError</span>: <span class=\"n\">name 'pd' is not defined. Did you mean: 'id'?</span>\n</pre></div>\n</span>",
+          "mimetype": "application/vnd.marimo+traceback"
+        }
+      ]
+    }
+  ]
+}
