@@ -97,37 +97,8 @@ def _(mo):
     mo.md(r"""
     ## **No-Change Baseline**
 
-    To predict the gene count vectors of perturbed cells, the first method we try is the no-change baseline. For each cell in the perturbed group, this method samples a random cell in the control group and predicts the sample's gene counts. This method makes the assumption that each perturbation will have no effect.
+    To predict the gene count vectors of perturbed cells, the first method we try is the no-change baseline. For each cell in the perturbed group, this method samples a random cell in the control group and predicts the sample's gene counts. This method makes the assumption that each perturbation will have no effect. This method only uses the validation set, not the training set.
     """)
-    return
-
-
-@app.cell
-def _(adata):
-    small_adata = adata[:5000]
-    return (small_adata,)
-
-
-@app.cell
-def _(small_adata):
-    control_group = small_adata[small_adata.obs["target_gene"] == "non-targeting"]
-    perturbed_group = small_adata[small_adata.obs["target_gene"] != "non-targeting"]
-    print("Perturbed Group Dims:", perturbed_group.shape)
-    print("Control Group Dims:", control_group.shape)
-    return control_group, perturbed_group
-
-
-@app.cell
-def _(ad, control_group, np, perturbed_group, small_adata):
-    rng = np.random.default_rng(0)
-    idx = rng.integers(0, control_group.n_obs, size=perturbed_group.n_obs)   # pick a control cell for each perturbed cell
-
-    pred_nochange = ad.AnnData(
-        X=control_group.X[idx],                  # control rows, still sparse
-        obs=perturbed_group.obs.copy(),          # keep each perturbed cell's labels
-        var=small_adata.var.copy(),
-    )
-    pred_nochange
     return
 
 
@@ -166,7 +137,6 @@ def calc_mae(small_val_adata, val_pred_nochange):
                                 metrics=["expr_mae", "pds_l1"],
                                 pert_col="target_gene", control="non-targeting")
     metrics_df
-
     return aggregate_metrics, metrics_df
 
 
