@@ -61,17 +61,20 @@ def _(mo):
 
     **Expression MAE:** lower means the mean expression profile is closer.
     **PDS:** higher means the predicted response is better at matching its own
-    target rather than other targets. These metrics depend on the chosen target
-    panel and cell-generation assumptions. Full-cell differential-expression
-    (DE) metrics are being computed separately and will be added later.
+    target rather than other targets. **DE overlap:** higher means more overlap
+    between the real and predicted differentially expressed genes. All three
+    metrics depend on the target panel and the predicted-cell assumptions.
     """)
     return
 
 
 @app.cell
 def _(Path, mo, pd):
-    _path = Path(mo.notebook_dir()).parent / "examples/all_validation_cells.csv"
-    mo.vstack([mo.md("### Expression and discrimination"), pd.read_csv(_path)])
+    _examples = Path(mo.notebook_dir()).parent / "examples"
+    _expression = pd.read_csv(_examples / "all_validation_cells.csv")
+    _de = pd.read_csv(_examples / "full_validation_de_summary.csv")
+    _results = _expression.merge(_de, on="method", validate="one_to_one")
+    mo.vstack([mo.md("### Expression, discrimination, and DE overlap"), _results])
     return
 
 

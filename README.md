@@ -4,5 +4,6 @@
 
 The [KNN workflow](knn_workflow/README.md) contains the model code, validation
 comparison, and a first-principles [marimo codebook](knn_workflow/notebooks/model_codebook.py).
-The expression and discrimination results use all available validation cells.
-Differential-expression metrics are being computed and will be added later.
+The expression, discrimination, and differential-expression comparisons use all
+available real validation cells. Predictions and DE depend on the documented
+cell-generation assumption; the official test responses remain held out.

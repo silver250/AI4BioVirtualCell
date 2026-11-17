@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "targets": 50,
+  "models": 7,
+  "scores": 350,
+  "independent_overlap_max_abs_difference": 0.0,
+  "fixed_baseline_tables_identical": {
+    "no_change": true,
+    "mean_effect": true
+  },
+  "full_control_reference_parity": {
+    "max_p_diff": 0.0,
+    "max_logfc_diff": 0.0,
+    "different_significant": 0
+  },
+  "note": "Numerical/coverage audit only. Additive control shifts and reused validation remain scientific limitations. Bootstrap resamples target scores, conditional on the sampled prediction controls."
+}
