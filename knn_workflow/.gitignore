@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.py[cod]
+__marimo__/
+data/*
+!data/README.md
+results/*
+!results/README.md
+*.h5ad
+*.pkl
+
+*.egg-info/

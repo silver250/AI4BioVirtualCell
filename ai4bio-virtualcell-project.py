@@ -197,5 +197,18 @@ def _(aggregate_metrics, compute_metrics, small_val_adata, val_pred_mean):
     return
 
 
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Network KNN comparison
+
+    The [KNN codebook](knn_workflow/notebooks/model_codebook.py) explains the
+    models and displays the full-validation expression and discrimination
+    comparison. The [workflow README](knn_workflow/README.md) explains how to
+    reproduce it. The codebook includes the full-validation DE comparison.
+    """)
+    return
+
+
 if __name__ == "__main__":
     app.run()
