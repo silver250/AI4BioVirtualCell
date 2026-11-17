@@ -4,7 +4,7 @@ version = "0.1.0"
 requires-python = ">=3.11,<3.13"
 dependencies = [
   "numpy", "pandas", "scipy", "h5py", "anndata", "marimo>=0.25,<0.26",
-  "cell-eval2==0.22.0", "scanpy", "pyarrow"
+  "cell-eval2==0.22.0", "scanpy", "pyarrow", "matplotlib", "numba", "polars", "psutil"
 ]
 
 [build-system]

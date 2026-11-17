@@ -20,8 +20,19 @@ We ask whether a gene network helps predict a knockdown response for a target ab
 | `src/cellmates/cells.py` | Experimental control-based predicted cell populations. |
 | `src/cellmates/neighbor_cells.py` | Experimental transfer of observed training-neighbor cells. |
 | `src/cellmates/evaluation.py` | Common `cell_eval2` configuration. |
+| `src/cellmates/full_de.py` | Memory-bounded CPU calculations for full-cell DE. |
 | `scripts/` | Explicit training preprocessing, network preparation and validation runs. |
 | `tests/` | Small behavior checks with invented data. |
+
+## Suggested reading order
+
+1. Start with `notebooks/model_codebook.py` for the question, models and results.
+2. Read `preprocessing.py` to see how counts become one response vector per target.
+3. Read `baselines.py`, `direct.py`, then `dsd.py` to see how each model makes a prediction.
+4. Read `cells.py` and `evaluation.py` for the assumptions used to turn predictions into cells and compare them with validation data. `neighbor_cells.py` is a separate experimental alternative.
+5. Read the scripts in order: `prepare_training_effects.py`, `prepare_networks.py`, then `run_all_validation_cells.py` and `run_full_de.py`. `run_validation.py` is the smaller sampled-cell option and supplies shared helper functions.
+
+The comments in these files explain each major step. The `tests/` folder uses small invented examples to check behavior; the CSV in `examples/` is a saved result, not code to edit to change a model.
 
 ## Run the validation workflow
 
@@ -47,7 +58,11 @@ Install Python 3.12 and [uv](https://docs.astral.sh/uv/), then from this directo
 
    The default reports expression MAE and PDS on the selected number of cells per group, using the additive cell-generation assumption. `--generator hurdle` changes that assumption. `--de` adds differential-expression overlap; interpret it with the limitations in the assumptions document. Output directories must not already exist. Outputs include local cell barcodes, so do not commit them.
 
-4. To use **every real validation cell** for expression MAE and PDS while staying within memory limits, run the same arguments with `scripts/run_all_validation_cells.py` instead. It streams all observed cells into group averages and uses 500 sampled training controls per predicted target by default. For these two metrics the group averages retain the needed information. It does not compute DE, which requires individual-cell variation. The separately calculated full-cell DE summaries and audit are in `examples/`; their memory-bounded calculation code is not yet included here.
+4. To use **every real validation cell** for expression MAE and PDS while staying within memory limits, run the same arguments with `scripts/run_all_validation_cells.py` instead. It streams all observed cells into group averages and uses 500 sampled training controls per predicted target by default. For these two metrics the group averages retain the needed information. It does not compute DE, which requires individual-cell variation.
+
+5. To calculate full-cell DE on CPU, use the same input arguments with `scripts/run_full_de.py`. It uses all real validation targets and controls, and the same 500 predicted cells per target. For a smaller check, add `--targets ACLY`; an independently calculated ACLY DE parquet can optionally be supplied with `--reference-de /path/reference.parquet`.
+
+   The script needs temporary scratch disk roughly equal to `number of controls × number of genes × 4` bytes, plus at least 1.5 GB free reserve (about 2.8 GB plus reserve for our validation data). Temporary files are removed on normal exit and handled exceptions; if the process is killed, check for leftover `control_*` folders after confirming it has stopped. DE tables, sample identifiers, settings, and scores are local outputs and must not be committed. The calculation matches the documented `cell-eval2` 0.22.0 Scanpy/log-normalized settings, including its skipped CPM filter. See `docs/ASSUMPTIONS.md` before interpreting the scores.
 
 Run small correctness checks with `uv run python -m unittest discover -s tests`. The graph, model and evaluation code have been compared with the local exploratory results; see the experiment notes. Verify source identity against the official VCC manifest before any final claims. The scripts rely on the operator to supply the appropriate split; they cannot identify every mislabeled test file.
 
