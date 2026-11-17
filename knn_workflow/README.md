@@ -5,6 +5,7 @@ We ask whether a gene network helps predict a knockdown response for a target ab
 ## Start here
 
 - [Model codebook](notebooks/model_codebook.py): first-principles walkthrough and small saved result tables. Run `uv run marimo edit notebooks/model_codebook.py`.
+- [How each baseline works](docs/MODELS.md): plain-language steps, weights, and code locations.
 - [Assumptions and evaluation](docs/ASSUMPTIONS.md): what the models and metrics mean, and the remaining decisions.
 - [Data instructions](data/README.md): keep large inputs and cell IDs outside Git.
 - [Example results](examples/README.md): what the saved aggregate tables show.

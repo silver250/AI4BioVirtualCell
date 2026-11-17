@@ -51,6 +51,19 @@ def _(mo):
     still ranks by the combined score. DSD uses the full graph, including
     intermediate proteins, to compare six-step walk patterns.
 
+    **How the average works:** With two neighbors, equal weighting gives each
+    half. If their combined scores are 0.8 and 0.4, score weighting gives them
+    two thirds and one third. We use up to five direct neighbors and fall back
+    to the training mean if none qualify. `mean_effect` averages training
+    responses, not control-cell expression.
+
+    **How DSD works:** A walk follows network connections for six steps, with
+    stronger-scored connections more likely. We compare the resulting visit
+    patterns, choose up to five or ten closest training targets, and average
+    their responses equally. The DSD graph uses the combined-score cutoff;
+    the extra evidence requirement above applies only to `evidence_equal`.
+    See `docs/MODELS.md` for the full steps and code locations.
+
     A STRING score measures confidence in an association, not the size of a
     knockdown response. If a network model has no eligible training neighbor,
     it uses the mean-effect baseline.
